@@ -6,13 +6,10 @@ const aDb = require("./answered.js");
 const naDb = require("./newAnswered.js");
 */
 
-const { Client } = require('pg');
+const Pool = require('pg').Pool;
 
-const client = new Client({
-  connectionString: "postgres://zmetwwifeybftf:5eb6e48ba17ac2aa3cfb0063c133ea8a0e14fbaf6755426caaa4fa63d2850930@ec2-3-91-139-25.compute-1.amazonaws.com:5432/df049esj9d4bgk",
-  ssl: {
-    rejectUnauthorized: false
-  }
+const pool = new Pool({
+  connectionString: "postgres://zmetwwifeybftf:5eb6e48ba17ac2aa3cfb0063c133ea8a0e14fbaf6755426caaa4fa63d2850930@ec2-3-91-139-25.compute-1.amazonaws.com:5432/df049esj9d4bgk"
 });
 
 const app = express();
@@ -29,10 +26,19 @@ app.get("/",(req,res) => {
     res.end("Incorrect params: ip marked");
 });
 
+app.get('/testdata', (req, res, next) => { 
+  console.log("TEST DATA :"); 
+  pool.query('Select * from answered') 
+      .then(testData => { 
+          console.log(testData); 
+          res.send(testData.rows); 
+      }) 
+}) 
+
 
 app.get("/answers", (req,res) => {
   const sql = "SELECT * FROM answered";
-  const values = [5000];
+  const values = [5];
   client.query(sql, values).then(response => {
     const data = res.rows;
     data.forEach(row => res.send(row));
