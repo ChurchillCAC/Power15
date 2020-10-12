@@ -2,6 +2,16 @@ const express = require("express");
 const db = require("./database.js");
 const aDb = require("./answered.js");
 const naDb = require("./newAnswered.js");
+const { Client } = require('pg');
+
+const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
+
+client.connect();
 
 const app = express();
 const bodyparser = require("body-parser");
@@ -9,9 +19,6 @@ var md5 = require("md5");
 
 const port = process.env.PORT || 3200;
 
-var connectionString = "postgres://*zmetwwifeybftf*:*PASSWORD*@*ec2-3-91-139-25.compute-1.amazonaws.com*:*5432*/*df049esj9d4bgk*"
-
-// middleware
 
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: false }));
@@ -19,6 +26,19 @@ app.use(bodyparser.urlencoded({ extended: false }));
 app.get("/",(req,res) => {
     res.end("Incorrect params: ip marked");
 });
+
+
+app.get("/answers",(req,res) => {
+  client.query('SELECT * FROM answered', (err, res) => {
+    if (err) throw err;
+    for (let row of res.rows) {
+      console.log(JSON.stringify(row));
+    }
+    client.end();
+  });
+
+});
+
 /*
 app.get("/users", (req, res, next) => {
   var sql = "select * from user"
