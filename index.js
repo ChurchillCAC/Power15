@@ -18,9 +18,24 @@ var md5 = require("md5");
 
 const port = process.env.PORT || 3200;
 
-
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: false }));
+
+
+pool.connect((err, client, release) => { 
+  if (err) { 
+      return console.error( 
+          'Error acquiring client', err.stack) 
+  } 
+  client.query('SELECT NOW()', (err, result) => { 
+      release() 
+      if (err) { 
+          return console.error( 
+              'Error executing query', err.stack) 
+      } 
+      console.log("Connected to Database !") 
+  }) 
+}) 
 
 app.get("/",(req,res) => {
     res.end("Incorrect params: ip marked");
