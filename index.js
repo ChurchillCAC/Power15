@@ -30,7 +30,7 @@ app.get("/",(req,res) => {
 });
 
 
-app.get("/answers",(req,res) => {
+app.get("/answers", async (req,res) => {
   try {
     const results = await client.query("SELECT * FROM answered");
     return res.json(results.rows);
