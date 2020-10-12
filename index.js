@@ -9,6 +9,8 @@ var md5 = require("md5");
 
 const port = process.env.PORT || 3200;
 
+var connectionString = "postgres://*zmetwwifeybftf*:*PASSWORD*@*ec2-3-91-139-25.compute-1.amazonaws.com*:*5432*/*df049esj9d4bgk*"
+
 // middleware
 
 app.use(bodyparser.json());
@@ -17,7 +19,7 @@ app.use(bodyparser.urlencoded({ extended: false }));
 app.get("/",(req,res) => {
     res.end("Incorrect params: ip marked");
 });
-
+/*
 app.get("/users", (req, res, next) => {
   var sql = "select * from user"
   var params = []
@@ -199,6 +201,9 @@ app.get("/newAnswers", (req,res,next) =>{
       })
     });
 });
+*/
+
+
 
 
 app.listen(port, () => {
