@@ -102,7 +102,7 @@ app.post("/answer", (req,res,next) =>{
   }
   var data = {
     userId : req.body.userid,
-    answerId : req.body.answerId,
+    answerId : req.body.answerid,
     questionId : req.body.questionid,
     buzzed : req.body.buzzed,
     clue : req.body.clue
