@@ -10,6 +10,10 @@ const port = process.env.PORT || 3200;
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: false }));
 
+app.get("/",(req,res) => {
+    res.end("Hello world");
+});
+
 app.listen(port, () => {
   console.log(`running at port ${port}`);
 });
