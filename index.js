@@ -38,7 +38,7 @@ app.get("/answers",(req,res) => {
     if (err) throw err;
     for (let row of res.rows) {
       s = s + " "  +row;
-      console.log(JSON.stringify(row));
+      res.end(JSON.stringify(row));
     }
   });
   res.end("found = " +s);
