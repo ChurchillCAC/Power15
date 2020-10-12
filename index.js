@@ -79,6 +79,10 @@ app.get("/answers", (req,res,next) =>{
     });
 });
 
+app.get("/wake",(req,res,next) =>{
+  res.end("Awake");
+});
+
 app.post("/answer", (req,res,next) =>{
   var errors=[]
   if (!req.body.userid){
