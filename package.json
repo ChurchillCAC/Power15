@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/ChurchillCAC/Power15Restful/issues"
   },
-  "homepage": "https://github.com/ChurchillCAC/Power15Restful#readme"
+  "homepage": "https://github.com/ChurchillCAC/Power15Restful#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
