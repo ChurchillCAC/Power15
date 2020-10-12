@@ -41,8 +41,7 @@ app.get("/",(req,res) => {
     res.end("Incorrect params: ip marked");
 });
 
-app.get('/testdata', (req, res, next) => { 
-  console.log("TEST DATA :"); 
+app.get('/getdata', (req, res, next) => { 
   pool.query('Select * from answered') 
       .then(testData => { 
           console.log(testData); 
@@ -50,16 +49,30 @@ app.get('/testdata', (req, res, next) => {
       }) 
 }) 
 
+app.post('/postdata', (req,res, next) => {
+  var data = {
+    userId : req.body.userid,
+    answerId : req.body.answerid,
+    questionId : req.body.questionid,
+    buzzed : req.body.buzzed,
+    clue : req.body.clue,
+    score : req.body.score,
+    rating : req.body.rating
+  }
+  var sql = 'INSERT INTO answered (userId, answerId, questionId, buzzed, clue, score, rating) VALUES (?,?,?,?,?,?,?)';
+  var values = [data.userId,data.answerId,data.questionId,data.buzzed,data.clue,data.score,data.rating];
 
-app.get("/answers", (req,res) => {
-  const sql = "SELECT * FROM answered";
-  const values = [5];
-  client.query(sql, values).then(response => {
-    const data = res.rows;
-    data.forEach(row => res.send(row));
-  }).finally(() =>{
-      res.send("Done reading");
+  pool.query(sql,values, (err,results) => {
+    if (err){
+      res.status(400).json({"error": err.message})
+      return;
+    }
+    res.json({
+      "message": "success",
+      "data": data
+    });
   });
+
 });
 
 
