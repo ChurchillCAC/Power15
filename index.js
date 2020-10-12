@@ -33,16 +33,15 @@ app.get("/",(req,res) => {
 
 
 app.get("/answers",(req,res) => {
-  var s = "";
+  var s;
   client.query('SELECT * FROM answered', (err, res) => {
     if (err) throw err;
     for (let row of res.rows) {
-      s += JSON.stringify(row);
+      s = JSON.stringify(row);
       console.log(JSON.stringify(row));
     }
   });
-  res.end(s);
-
+  res.end(s + " found=");
 });
 
 /*
