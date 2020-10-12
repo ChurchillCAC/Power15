@@ -6,8 +6,6 @@ const aDb = require("./answered.js");
 const naDb = require("./newAnswered.js");
 */
 
-const Sequelize = require('sequelize');
-/*
 const { Client } = require('pg');
 
 const client = new Client({
@@ -16,19 +14,6 @@ const client = new Client({
     rejectUnauthorized: false
   }
 });
-*/
-
-const sequelize = new Sequelize("postgres://zmetwwifeybftf:5eb6e48ba17ac2aa3cfb0063c133ea8a0e14fbaf6755426caaa4fa63d2850930@ec2-3-91-139-25.compute-1.amazonaws.com:5432/df049esj9d4bgk");
-
-//client.connect();
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log('Connection has been established successfully.');
-  })
-  .catch(err => {
-  console.error('Unable to connect to the database:', err);
-  });
 
 const app = express();
 const bodyparser = require("body-parser");
@@ -46,8 +31,14 @@ app.get("/",(req,res) => {
 
 
 app.get("/answers",(req,res) => {
-  
+  try {
+    const results = await client.query("SELECT * FROM answered");
+    return res.json(results.rows);
+  } catch (err) {
+    return next(err);
+  }
 });
+
 
 /*
 app.get("/users", (req, res, next) => {
