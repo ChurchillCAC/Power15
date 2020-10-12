@@ -3,6 +3,7 @@ const db = require("./database.js");
 
 const app = express();
 const bodyparser = require("body-parser");
+var md5 = require("md5");
 
 const port = process.env.PORT || 3200;
 
