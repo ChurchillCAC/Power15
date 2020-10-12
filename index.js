@@ -1,6 +1,7 @@
 const express = require("express");
 const db = require("./database.js");
 const aDb = require("./answered.js");
+const naDb = require("./newAnswered.js");
 
 const app = express();
 const bodyparser = require("body-parser");
@@ -116,6 +117,60 @@ app.post("/answer", (req,res,next) =>{
   var params = [data.userId,data.answerId,data.questionId,data.buzzed,data.clue]
 
   aDb.run(insert,params, function(err, result){
+    if (err){
+      res.status(400).json({"error": err.message})
+      return;
+    }
+    res.json({
+        "message": "success",
+        "data": data,
+        "id" : this.lastID
+    })
+  });
+
+});
+
+app.post("/addAnswer", (req,res,next) =>{
+  var errors=[]
+  if (!req.body.userid){
+      errors.push("No userid specified");
+  }
+  if (!req.body.answerid){
+      errors.push("No answerid specified");
+  }
+  if (!req.body.questionid){
+    errors.push("No questionid specified");
+  }
+  if (!req.body.buzzed){
+    errors.push("No buzzed text specified");
+  }
+  if (!req.body.clue){
+    errors.push("No clue text specified");
+  }
+  if (!req.body.score){
+    errors.push("No score specified");
+  }
+  if(!req.body.rating){
+    errors.push("No rating specified"); 
+  }
+  if (errors.length){
+      res.status(400).json({"error":errors.join(",")});
+      return;
+  }
+  var data = {
+    userId : req.body.userid,
+    answerId : req.body.answerid,
+    questionId : req.body.questionid,
+    buzzed : req.body.buzzed,
+    clue : req.body.clue,
+    score : req.body.score,
+    rating : req.body.rating
+  }
+
+  var insert = 'INSERT INTO answerList (userId, answerId, questionId, buzzed, clue, score, rating) VALUES (?,?,?,?,?,?,?)'
+  var params = [data.userId,data.answerId,data.questionId,data.buzzed,data.clue,data.score,data.rating]
+
+  naDb.run(insert,params, function(err, result){
     if (err){
       res.status(400).json({"error": err.message})
       return;
