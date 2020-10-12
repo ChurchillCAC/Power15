@@ -14,7 +14,7 @@ app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: false }));
 
 app.get("/",(req,res) => {
-    res.end("Hello world");
+    res.end("Incorrect params: ip marked");
 });
 
 app.get("/users", (req, res, next) => {
