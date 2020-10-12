@@ -37,11 +37,11 @@ app.get("/answers",(req,res) => {
   client.query('SELECT * FROM answered', (err, res) => {
     if (err) throw err;
     for (let row of res.rows) {
-      s = s + " "  +row;
-      res.send(JSON.stringify(row));
+      s = JSON.stringify(row);
+      Console.log(JSON.stringify(row));
     }
   });
-  res.end("found = " +s);
+  res.send(s);
 });
 
 /*
