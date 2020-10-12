@@ -1,5 +1,6 @@
 const express = require("express");
 const db = require("./database.js");
+const aDb = require("./answered.js");
 
 const app = express();
 const bodyparser = require("body-parser");
@@ -61,6 +62,21 @@ app.post("/user", (req, res, next) => {
           "id" : this.lastID
       })
   });
+});
+
+app.get("/answers", (req,res,next) =>{
+  var sql = "select * from answerList";
+  var params = []
+  db.all(sql, params, (err, rows) => {
+      if (err) {
+        res.status(400).json({"error":err.message});
+        return;
+      }
+      res.json({
+          "message":"success",
+          "data":rows
+      })
+    });
 });
 
 app.listen(port, () => {
