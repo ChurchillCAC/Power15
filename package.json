@@ -19,6 +19,7 @@
   "homepage": "https://github.com/ChurchillCAC/Power15Restful#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "node-pre-gyp": "^0.15.0",
     "sqlite3": "^5.0.0"
   }
 }
