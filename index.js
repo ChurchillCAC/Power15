@@ -67,7 +67,7 @@ app.post("/user", (req, res, next) => {
 app.get("/answers", (req,res,next) =>{
   var sql = "select * from answerList";
   var params = []
-  db.all(sql, params, (err, rows) => {
+  aDb.all(sql, params, (err, rows) => {
       if (err) {
         res.status(400).json({"error":err.message});
         return;
