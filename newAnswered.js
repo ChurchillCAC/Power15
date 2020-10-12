@@ -25,7 +25,7 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
             if (err) {
                 //Table exists
             }else{
-                var insert = 'INSERT INTO answerList (userId, answerId, questionId, buzzed, clue, score, rating) VALUES (?,?,?,?,?)'
+                var insert = 'INSERT INTO answerList (userId, answerId, questionId, buzzed, clue, score, rating) VALUES (?,?,?,?,?,?,?)'
                 db.run(insert, [0,0,0,"Buzzed Answer", "Clue buzzed", 800.0, 123.4])
             }
         });  
