@@ -1,4 +1,5 @@
 const express = require("express");
+const db = require("./database.js");
 
 const app = express();
 const bodyparser = require("body-parser");
@@ -12,6 +13,21 @@ app.use(bodyparser.urlencoded({ extended: false }));
 
 app.get("/",(req,res) => {
     res.end("Hello world");
+});
+
+app.get("/users", (req, res, next) => {
+  var sql = "select * from user"
+  var params = []
+  db.all(sql, params, (err, rows) => {
+      if (err) {
+        res.status(400).json({"error":err.message});
+        return;
+      }
+      res.json({
+          "message":"success",
+          "data":rows
+      })
+    });
 });
 
 app.listen(port, () => {
