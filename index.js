@@ -59,7 +59,7 @@ app.post('/postdata', (req,res, next) => {
     score : req.body.score,
     rating : req.body.rating
   }
-  var sql = 'INSERT INTO answered (userId, answerId, questionId, buzzed, clue, score, rating) VALUES (?,?,?,?,?,?,?)';
+  var sql = 'INSERT INTO answered (userId, answerId, questionId, buzzed, clue, score, rating) VALUES ($1,$2,$3,$4,$5,$6,$7)';
   var values = [data.userId,data.answerId,data.questionId,data.buzzed,data.clue,data.score,data.rating];
 
   pool.query(sql,values, (err,results) => {
