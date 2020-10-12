@@ -1,7 +1,11 @@
 const express = require("express");
+
+/*
 const db = require("./database.js");
 const aDb = require("./answered.js");
 const naDb = require("./newAnswered.js");
+*/
+
 const { Client } = require('pg');
 
 const client = new Client({
@@ -31,10 +35,12 @@ app.get("/",(req,res) => {
 app.get("/answers",(req,res) => {
   client.query('SELECT * FROM answered', (err, res) => {
     if (err) throw err;
+    var s = "";
     for (let row of res.rows) {
+      s += JSON.stringify(row);
       console.log(JSON.stringify(row));
     }
-    res.end(JSON.stringify(row));
+    res.end(s);
   });
 
 });
