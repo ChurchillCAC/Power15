@@ -79,6 +79,52 @@ app.get("/answers", (req,res,next) =>{
     });
 });
 
+app.post("/answer", (req,res,next) =>{
+  var errors=[]
+  if (!req.body.userid){
+      errors.push("No userid specified");
+  }
+  if (!req.body.answerid){
+      errors.push("No answerid specified");
+  }
+  if (!req.body.questionid){
+    errors.push("No questionid specified");
+  }
+  if (!req.body.buzzed){
+    errors.push("No buzzed text specified");
+  }
+  if (!req.body.clue){
+    errors.push("No clue text specified");
+  }
+  if (errors.length){
+      res.status(400).json({"error":errors.join(",")});
+      return;
+  }
+  var data = {
+    userId : req.body.userid,
+    answerId : req.body.answerId,
+    questionId : req.body.questionid,
+    buzzed : req.body.buzzed,
+    clue : req.body.clue
+  }
+
+  var insert = 'INSERT INTO answerList (userId, answerId, questionId, buzzed, clue) VALUES (?,?,?,?,?)'
+  var params = [data.userId,data.answerId,data.questionId,data.buzzed,data.clue]
+
+  aDb.run(insert,params, function(err, result){
+    if (err){
+      res.status(400).json({"error": err.message})
+      return;
+    }
+    res.json({
+        "message": "success",
+        "data": data,
+        "id" : this.lastID
+    })
+  });
+
+});
+
 app.listen(port, () => {
   console.log(`running at port ${port}`);
 });
