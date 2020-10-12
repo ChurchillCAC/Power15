@@ -33,7 +33,7 @@ app.get("/",(req,res) => {
 
 
 app.get("/answers",(req,res) => {
-  var s;
+  var s = new JSON.stringify();
   client.query('SELECT * FROM answered', (err, res) => {
     if (err) throw err;
     for (let row of res.rows) {
@@ -41,7 +41,7 @@ app.get("/answers",(req,res) => {
       console.log(JSON.stringify(row));
     }
   });
-  res.end(s + " found=");
+  res.end("found = " +s);
 });
 
 /*
