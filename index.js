@@ -30,7 +30,7 @@ app.get("/users", (req, res, next) => {
     });
 });
 
-app.post("/api/user/", (req, res, next) => {
+app.post("/user", (req, res, next) => {
   var errors=[]
   if (!req.body.password){
       errors.push("No password specified");
