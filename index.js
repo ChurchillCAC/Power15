@@ -30,13 +30,15 @@ app.get("/",(req,res) => {
 });
 
 
-app.get("/answers", async (req,res) => {
-  try {
-    const results = await client.query("SELECT * FROM answered");
-    return res.json(results.rows);
-  } catch (err) {
-    return next(err);
-  }
+app.get("/answers", (req,res) => {
+  const sql = "SELECT * FROM answered";
+  const values = [5000];
+  client.query(sql, values).then(response => {
+    const data = res.rows;
+    data.forEach(row => res.send(row));
+  }).finally(() =>{
+      res.send("Done reading");
+  });
 });
 
 
