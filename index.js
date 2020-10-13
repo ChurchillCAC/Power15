@@ -49,7 +49,7 @@ app.get('/getdata', (req, res, next) => {
       }) 
 });
 
-app.get('/getlogin', (req,res,next) =>){
+app.get('/getlogin', (req,res,next) =>{
   var data = {
     userid =  req.body.userid,
     password = req.body.password
@@ -66,7 +66,27 @@ app.get('/getlogin', (req,res,next) =>){
       "data" : data
     })
   })
-}
+});
+
+app.post('/postlogin', (req,res,next) =>{
+  var data = {
+    userid = req.body.userid,
+    password = req.body.password
+  }
+  var sql = 'INSERT INTO login (userid, password) VALUES ($1,$2)'
+  var values = [data.userid,data.password]
+
+  pool.query(sql,values, (err,results) =>{
+    if (err){
+      res.status(400).json({"error": err.message})
+      return;
+    }
+    res.json({
+      "message": "success",
+      "data": data
+    });
+  })
+});
 
 app.get('/wake',(req,res,next) => {
   res.end("Awake");
