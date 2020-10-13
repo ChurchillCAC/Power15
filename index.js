@@ -78,14 +78,14 @@ app.get('/getlogin', (req,res,next) =>{
         }
         if(userFound){
           if(pwdMatch){
-            res.status(200).send(11)
+            res.status(200).send("Username and password match")
             return;
           }else{
-            res.status(200).send(10);
+            res.status(200).send("Incorrect password");
             return;
           }
         }else{
-          res.status(200).send(00);
+          res.status(200).send("No such user found");
           return;
         }
     })
