@@ -47,7 +47,11 @@ app.get('/getdata', (req, res, next) => {
           console.log(testData); 
           res.send(testData.rows); 
       }) 
-}) 
+});
+
+app.get('/wake',(req,res,next) => {
+  res.end("Awake");
+});
 
 app.post('/postdata', (req,res, next) => {
   var data = {
