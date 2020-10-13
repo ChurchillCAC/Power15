@@ -61,7 +61,7 @@ app.get('/getlogin', (req,res,next) =>{
         console.log(testData);
         console.log("Adding");
         var dbData = testData.rows
-        for(let i = 0; i < dbData.length; i +=1{
+        for(let i = 0; i < dbData.length; i +=1){
           let obj = dbData[i];
           for(let key in obj){
             console.log(`Key: ${key}`);
