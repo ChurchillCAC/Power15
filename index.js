@@ -51,8 +51,8 @@ app.get('/getdata', (req, res, next) => {
 
 app.get('/getlogin', (req,res,next) =>{
   var data = {
-    userid =  req.body.userid,
-    password = req.body.password
+    userid :  req.body.userid,
+    password : req.body.password
   }
   var sql = 'Select * From login Where userid = $1'
   var values = [data.userid]
@@ -70,8 +70,8 @@ app.get('/getlogin', (req,res,next) =>{
 
 app.post('/postlogin', (req,res,next) =>{
   var data = {
-    userid = req.body.userid,
-    password = req.body.password
+    userid : req.body.userid,
+    password : req.body.password
   }
   var sql = 'INSERT INTO login (userid, password) VALUES ($1,$2)'
   var values = [data.userid,data.password]
