@@ -56,16 +56,11 @@ app.get('/getlogin', (req,res,next) =>{
   }
   var sql = 'Select * From login Where userid = $1'
   var values = [data.userid]
-  pool.query(sql,values,(err,results) => {
-    if(err){
-      res.stats(400).json({"error" : err.message})
-      return;
-    }
-    res.json({
-      "message" : "success",
-      "data" : data
+  pool.query(sql,values,(err,results))
+    .then(testData => {
+        console.log(testData);
+        res.send(testData.rows);
     })
-  })
 });
 
 app.post('/postlogin', (req,res,next) =>{
