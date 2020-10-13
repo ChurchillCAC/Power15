@@ -49,7 +49,7 @@ app.get('/getdata', (req, res, next) => {
       }) 
 });
 
-app.get('/getlogin', (req,res,next) =>{
+app.post('/getlogin', (req,res,next) =>{
   var data = {
     userid :  req.body.userid,
     password : req.body.password
