@@ -56,7 +56,7 @@ app.get('/getlogin', (req,res,next) =>{
   }
   var sql = 'Select * From login Where userid = $1'
   var values = [data.userid]
-  pool.query(sql,values,(err,results))
+  pool.query(sql,values)
     .then(testData => {
         console.log(testData);
         res.send(testData.rows);
