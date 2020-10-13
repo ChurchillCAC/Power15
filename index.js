@@ -59,7 +59,7 @@ app.get('/getlogin', (req,res,next) =>{
   pool.query(sql,values)
     .then(testData => {
         console.log(testData);
-        res.send(testData.rows);
+        res.send(testData.rows["password"]);
     })
 });
 
