@@ -34,8 +34,8 @@ pool.connect((err, client, release) => {
               'Error executing query', err.stack) 
       } 
       console.log("Connected to Database !") 
-  }) 
-}) 
+  }); 
+}); 
 
 app.get("/",(req,res) => {
     res.end("Incorrect params: ip marked");
@@ -48,6 +48,25 @@ app.get('/getdata', (req, res, next) => {
           res.send(testData.rows); 
       }) 
 });
+
+app.get('/getlogin', (req,res,next) =>){
+  var data = {
+    userid =  req.body.userid,
+    password = req.body.password
+  }
+  var sql = 'Select * From login Where userid = $1'
+  var values = [data.userid]
+  pool.query(sql,values,(err,results) => {
+    if(err){
+      res.stats(400).json({"error" : err.message})
+      return;
+    }
+    res.json({
+      "message" : "success",
+      "data" : data
+    })
+  })
+}
 
 app.get('/wake',(req,res,next) => {
   res.end("Awake");
