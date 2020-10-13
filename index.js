@@ -88,7 +88,6 @@ app.get('/getlogin', (req,res,next) =>{
           res.status(200).send("No such user found");
           return;
         }
-        res.end();
     })
 });
 
