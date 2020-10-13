@@ -49,6 +49,29 @@ app.get('/getdata', (req, res, next) => {
       }) 
 });
 
+app.post('/report', (req,res,next) =>{
+  var data = {
+    userid : req.body.userid,
+    questionId : req.body.questionid,
+    problem :  req.body.problem,
+    category : req.body.category
+  }
+  var sql = 'INSERT INTO reports (userid, questionId, problem, category) VALUES ($1,$2,$3,$4)'
+  var values = [data.userid,data.questionId,data.problem,data.category]
+
+  pool.query(sql,values, (err,results) => {
+    if (err){
+      res.status(400).json({"error": err.message})
+      return;
+    }
+    res.json({
+      "message": "success",
+      "data": data
+    });
+  });
+
+});
+
 app.post('/getlogin', (req,res,next) =>{
   var data = {
     userid :  req.body.userid,
