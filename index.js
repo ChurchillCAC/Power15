@@ -54,6 +54,10 @@ app.get('/getlogin', (req,res,next) =>{
     userid :  req.body.userid,
     password : req.body.password
   }
+  var userFound = false;
+  var pwdMatch = false;
+
+
   var sql = 'Select * From login Where userid = $1'
   var values = [data.userid]
   pool.query(sql,values)
@@ -64,11 +68,27 @@ app.get('/getlogin', (req,res,next) =>{
         for(let i = 0; i < dbData.length; i +=1){
           let obj = dbData[i];
           for(let key in obj){
-            console.log(`Key: ${key}`);
-            console.log(`Value: ${obj[key]}`);
+            if(key == "userid"){
+              if(obj[key] == data.userid) userFound = true;
+            }
+            if(key == "password"){
+              if(obj[key] == data.password) pwdMatch = true;
+            }
           }
         }
-        res.send(testData.rows["password"]);
+        if(userFound){
+          if(pwdMatch){
+            res.status(200).send("Username and password match")
+            return;
+          }else{
+            res.status(200).send("Incorrect password");
+            return;
+          }
+        }else{
+          res.status(200).send("No such user found");
+          return;
+        }
+        res.end();
     })
 });
 
